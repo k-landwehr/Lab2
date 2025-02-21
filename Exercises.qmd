@@ -1,24 +1,17 @@
 ---
 title: "Minnesota Tree Growth Exercises"
+author: Kendall Landwehr 
 format: html
 editor: visual
 ---
 
 ```{r}
-install.packages("dplyr")
-```
-
-```{r}
-library(dplyr)
-tree_dat %>% summarise(n = n())
-```
-
-```{r}
 #Question 1
+library(dplyr)
+tree_dat <- read.csv("data/tree_dat.csv")
+tree_dat %>% summarise(n = n()) 
 
-nrow(tree_dat)
-
-##ANSWER: There are 131386 rows with the following columns: treeID, standID, stand, year, species, age, inc, and rad_ib.  
+##ANSWER: There are 131386 rows with the following columns: treeID, standID, stand, year, species, age, inc, and rad_ib.
 ```
 
 ```{r}
@@ -83,7 +76,7 @@ tree_dat %>%
 ```{r}
 #Question 7
 
-install.packages("dplyr")
+library(dplyr)
 library(tidyverse)
 tree_dat %>%
   slice_sample(prop = 0.3) %>%
@@ -96,11 +89,9 @@ tree_dat %>%
 ```{r}
 #Question 8
 
-library(dplyr)
-library(tidyverse)
 filtered_tree_dat <- tree_dat %>% 
   filter(standID == 5, year == 2007) %>%
-  arrange(desc(rad_ib_mm)) %>%
+  arrange(desc(rad_ib)) %>%
   slice_head(n = 3)
 
 #ANSWER: The top three trees are 128, 157, and 135.
@@ -109,12 +100,11 @@ filtered_tree_dat <- tree_dat %>%
 ```{r}
 #Question 9
 
-reduced_df <- df[ c("treeID", "standID", "year", "rad_ib")]
-head(reduced_df)
-
-reduced_df %>%
-  filter(standID == 3, year == 2007) %>%
-  slice_min (order_by = rad_ib, n = 3)
+filtered_tree_dat <- tree_dat %>%
+  select(treeID, standID, year, rad_ib) %>%
+  filter(standID == 3 & year == 2007) %>% 
+  slice_min(order_by = rad_ib, n = 3) %>%
+  glimpse() 
 
 #ANSWER: The smallest three trees are 50, 56, and 36.
 ```
@@ -122,18 +112,18 @@ reduced_df %>%
 ```{r}
 #Question 10
 
-reduced_df %>%
+filtered_tree_dat %>%
   select(-standID) %>%
   glimpse()
 
-#ANSWER: The removal of the stand colum can be found in the output table. 
+#ANSWER: The removal of the stand column can be found in the output table. 
 ```
 
 ```{r}
 #Question 11 
 
 ?dplyr::select
-reduced_df %>%
+filtered_tree_dat %>%
   select(contains("ID")) %>%
   glimpse()
 
@@ -143,7 +133,7 @@ reduced_df %>%
 ```{r}
 #Question 12
 
-reduced_df %>%
+filtered_tree_dat %>%
   select(contains("ID"),contains("stand"))%>%
   glimpse()
 
@@ -162,6 +152,7 @@ tree_dat <- tree_dat %>%
 
 ```{r}
 #Question 14
+
 filtered_tree_dat <- tree_dat %>% 
   mutate(rad_ib_cm = rad_ib_mm/10) %>%
   mutate(basal_area_m2 = 0.00007854*rad_ib_cm^2)
