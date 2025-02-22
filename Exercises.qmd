@@ -155,9 +155,7 @@ tree_dat <- tree_dat %>%
 
 filtered_tree_dat <- tree_dat %>% 
   mutate(rad_ib_cm = rad_ib_mm/10) %>%
-  mutate(basal_area_m2 = 0.00007854*rad_ib_cm^2)
-
-filtered_tree_dat <- tree_dat %>%
+  mutate(basal_area_m2 = 0.00007854*rad_ib_cm^2)%>%
   filter(year == 2007, species == "POTR")
 
 mean_basal_area <- mean(filtered_tree_dat$basal_area_m2, na.rm = TRUE)
@@ -180,14 +178,14 @@ filtered_tree_dat <- tree_dat %>%
 ```{r}
 #Question 16
 
-filtered_tree_dat <- tree_dat %>%
+filtered_tree_dat <- tree_dat %>% 
+  mutate(rad_ib_cm = rad_ib_mm / 10) %>%
   mutate(DBH_class = case_when(
     rad_ib_cm <2.5~"seedling", 
     rad_ib_cm <=10~"sapling",
     rad_ib_cm<=30~"pole",
     rad_ib_cm>30~"sawlog",
     TRUE~"NA_character"))%>%
-  filter(year == 2007) %>% 
   count(DBH_class)
   
 #ANSWER: Class "pole" has 473 trees, "sapling" has 1817, and "sawlog" has 1 tree.
@@ -197,6 +195,7 @@ filtered_tree_dat <- tree_dat %>%
 #Question 17
 
 filtered_tree_dat <- tree_dat %>%
+  mutate(rad_ib_cm = rad_ib_mm / 10) %>%
   filter(year == 2007)%>%
   summarize(
     mean_rad = mean(rad_ib_cm),
@@ -248,6 +247,7 @@ filtered_tree_dat <- tree_dat %>%
 #Final Question
 
 filtered_tree_dat <- tree_dat %>%
+  mutate(rad_ib_cm = rad_ib_mm / 10) %>%
   mutate(growth = rad_ib_cm - lag(rad_ib_cm)) %>%
   mutate(total_years = n()) %>%
   filter(total_years > 10) %>%

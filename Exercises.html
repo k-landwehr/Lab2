@@ -1,0 +1,1841 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Kendall Landwehr">
+
+<title>Minnesota Tree Growth Exercises</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Exercises_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Exercises_files/libs/quarto-html/quarto.js"></script>
+<script src="Exercises_files/libs/quarto-html/popper.min.js"></script>
+<script src="Exercises_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Exercises_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Exercises_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Exercises_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Exercises_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Exercises_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Exercises_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Minnesota Tree Growth Exercises</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Kendall Landwehr </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Question 1</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tree_dat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/tree_dat.csv"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>tree_dat <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       n
+1 131386</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">##ANSWER: There are 131386 rows with the following columns: treeID, standID, stand, year, species, age, inc, and rad_ib.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Question 2</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>filtered_tree_dat <span class="ot">&lt;-</span> tree_dat <span class="sc">%&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(standID <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="do">##ANSWER: 979 records have been made in stand 1. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># if I want to produce this tibblee in the environment I can rename it (this is called and assignment) and print it </span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>tree_count1 <span class="ot">&lt;-</span> tree_dat <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(standID <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(tree_count1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    treeID standID stand year species age   inc    rad_ib
+1        1       1    A1 1960    ABBA   1 0.930  10.78145
+2        1       1    A1 1961    ABBA   2 0.950  11.73145
+3        1       1    A1 1962    ABBA   3 0.985  12.71645
+4        1       1    A1 1963    ABBA   4 0.985  13.70145
+5        1       1    A1 1964    ABBA   5 0.715  14.41645
+6        1       1    A1 1965    ABBA   6 0.840  15.25645
+7        1       1    A1 1966    ABBA   7 0.685  15.94145
+8        1       1    A1 1967    ABBA   8 0.940  16.88145
+9        1       1    A1 1968    ABBA   9 1.165  18.04645
+10       1       1    A1 1969    ABBA  10 0.775  18.82145
+11       1       1    A1 1970    ABBA  11 0.565  19.38645
+12       1       1    A1 1971    ABBA  12 0.470  19.85645
+13       1       1    A1 1972    ABBA  13 0.455  20.31145
+14       1       1    A1 1973    ABBA  14 0.830  21.14145
+15       1       1    A1 1974    ABBA  15 1.020  22.16145
+16       1       1    A1 1975    ABBA  16 1.255  23.41645
+17       1       1    A1 1976    ABBA  17 1.380  24.79645
+18       1       1    A1 1977    ABBA  18 0.430  25.22645
+19       1       1    A1 1978    ABBA  19 0.920  26.14645
+20       1       1    A1 1979    ABBA  20 1.035  27.18145
+21       1       1    A1 1980    ABBA  21 0.610  27.79145
+22       1       1    A1 1981    ABBA  22 0.935  28.72645
+23       1       1    A1 1982    ABBA  23 1.245  29.97145
+24       1       1    A1 1983    ABBA  24 1.205  31.17645
+25       1       1    A1 1984    ABBA  25 1.495  32.67145
+26       1       1    A1 1985    ABBA  26 1.545  34.21645
+27       1       1    A1 1986    ABBA  27 1.285  35.50145
+28       1       1    A1 1987    ABBA  28 1.380  36.88145
+29       1       1    A1 1988    ABBA  29 1.340  38.22145
+30       1       1    A1 1989    ABBA  30 1.195  39.41645
+31       1       1    A1 1990    ABBA  31 1.375  40.79145
+32       1       1    A1 1991    ABBA  32 1.240  42.03145
+33       1       1    A1 1992    ABBA  33 0.870  42.90145
+34       1       1    A1 1993    ABBA  34 0.830  43.73145
+35       1       1    A1 1994    ABBA  35 0.500  44.23145
+36       1       1    A1 1995    ABBA  36 0.180  44.41145
+37       1       1    A1 1996    ABBA  37 0.220  44.63145
+38       1       1    A1 1997    ABBA  38 0.420  45.05145
+39       1       1    A1 1998    ABBA  39 0.475  45.52645
+40       1       1    A1 1999    ABBA  40 0.495  46.02145
+41       1       1    A1 2000    ABBA  41 1.000  47.02145
+42       1       1    A1 2001    ABBA  42 1.225  48.24645
+43       1       1    A1 2002    ABBA  43 1.000  49.24645
+44       1       1    A1 2003    ABBA  44 0.865  50.11145
+45       1       1    A1 2004    ABBA  45 1.145  51.25645
+46       1       1    A1 2005    ABBA  46 1.365  52.62145
+47       1       1    A1 2006    ABBA  47 1.295  53.91645
+48       1       1    A1 2007    ABBA  48 1.050  54.96645
+49       2       1    A1 1946    ABBA   2 1.565   2.21625
+50       2       1    A1 1947    ABBA   3 1.475   3.69125
+51       2       1    A1 1948    ABBA   4 1.245   4.93625
+52       2       1    A1 1949    ABBA   5 1.340   6.27625
+53       2       1    A1 1950    ABBA   6 1.215   7.49125
+54       2       1    A1 1951    ABBA   7 1.190   8.68125
+55       2       1    A1 1952    ABBA   8 0.995   9.67625
+56       2       1    A1 1953    ABBA   9 1.045  10.72125
+57       2       1    A1 1954    ABBA  10 1.015  11.73625
+58       2       1    A1 1955    ABBA  11 1.180  12.91625
+59       2       1    A1 1956    ABBA  12 0.980  13.89625
+60       2       1    A1 1957    ABBA  13 1.225  15.12125
+61       2       1    A1 1958    ABBA  14 0.850  15.97125
+62       2       1    A1 1959    ABBA  15 0.840  16.81125
+63       2       1    A1 1960    ABBA  16 0.625  17.43625
+64       2       1    A1 1961    ABBA  17 0.440  17.87625
+65       2       1    A1 1962    ABBA  18 0.655  18.53125
+66       2       1    A1 1963    ABBA  19 0.795  19.32625
+67       2       1    A1 1964    ABBA  20 0.845  20.17125
+68       2       1    A1 1965    ABBA  21 1.005  21.17625
+69       2       1    A1 1966    ABBA  22 0.750  21.92625
+70       2       1    A1 1967    ABBA  23 0.775  22.70125
+71       2       1    A1 1968    ABBA  24 0.670  23.37125
+72       2       1    A1 1969    ABBA  25 0.825  24.19625
+73       2       1    A1 1970    ABBA  26 0.910  25.10625
+74       2       1    A1 1971    ABBA  27 0.680  25.78625
+75       2       1    A1 1972    ABBA  28 0.560  26.34625
+76       2       1    A1 1973    ABBA  29 0.905  27.25125
+77       2       1    A1 1974    ABBA  30 0.780  28.03125
+78       2       1    A1 1975    ABBA  31 1.145  29.17625
+79       2       1    A1 1976    ABBA  32 0.995  30.17125
+80       2       1    A1 1977    ABBA  33 0.700  30.87125
+81       2       1    A1 1978    ABBA  34 0.945  31.81625
+82       2       1    A1 1979    ABBA  35 1.030  32.84625
+83       2       1    A1 1980    ABBA  36 0.720  33.56625
+84       2       1    A1 1981    ABBA  37 1.100  34.66625
+85       2       1    A1 1982    ABBA  38 1.125  35.79125
+86       2       1    A1 1983    ABBA  39 0.975  36.76625
+87       2       1    A1 1984    ABBA  40 1.410  38.17625
+88       2       1    A1 1985    ABBA  41 0.865  39.04125
+89       2       1    A1 1986    ABBA  42 0.785  39.82625
+90       2       1    A1 1987    ABBA  43 0.945  40.77125
+91       2       1    A1 1988    ABBA  44 0.915  41.68625
+92       2       1    A1 1989    ABBA  45 1.095  42.78125
+93       2       1    A1 1990    ABBA  46 1.325  44.10625
+94       2       1    A1 1991    ABBA  47 1.005  45.11125
+95       2       1    A1 1992    ABBA  48 0.925  46.03625
+96       2       1    A1 1993    ABBA  49 0.940  46.97625
+97       2       1    A1 1994    ABBA  50 0.595  47.57125
+98       2       1    A1 1995    ABBA  51 0.675  48.24625
+99       2       1    A1 1996    ABBA  52 0.480  48.72625
+100      2       1    A1 1997    ABBA  53 0.505  49.23125
+101      2       1    A1 1998    ABBA  54 0.585  49.81625
+102      2       1    A1 1999    ABBA  55 0.810  50.62625
+103      2       1    A1 2000    ABBA  56 1.200  51.82625
+104      2       1    A1 2001    ABBA  57 1.010  52.83625
+105      2       1    A1 2002    ABBA  58 0.820  53.65625
+106      2       1    A1 2003    ABBA  59 0.695  54.35125
+107      2       1    A1 2004    ABBA  60 0.895  55.24625
+108      2       1    A1 2005    ABBA  61 0.945  56.19125
+109      2       1    A1 2006    ABBA  62 0.605  56.79625
+110      2       1    A1 2007    ABBA  63 0.490  57.28625
+111      3       1    A1 1949    BEPA   1 0.880   1.99900
+112      3       1    A1 1950    BEPA   2 1.000   2.99900
+113      3       1    A1 1951    BEPA   3 0.645   3.64400
+114      3       1    A1 1952    BEPA   4 0.105   3.74900
+115      3       1    A1 1953    BEPA   5 0.790   4.53900
+116      3       1    A1 1954    BEPA   6 0.485   5.02400
+117      3       1    A1 1955    BEPA   7 0.460   5.48400
+118      3       1    A1 1956    BEPA   8 0.895   6.37900
+119      3       1    A1 1957    BEPA   9 0.475   6.85400
+120      3       1    A1 1958    BEPA  10 0.695   7.54900
+121      3       1    A1 1959    BEPA  11 0.500   8.04900
+122      3       1    A1 1960    BEPA  12 0.215   8.26400
+123      3       1    A1 1961    BEPA  13 0.015   8.27900
+124      3       1    A1 1962    BEPA  14 0.780   9.05900
+125      3       1    A1 1963    BEPA  15 0.805   9.86400
+126      3       1    A1 1964    BEPA  16 0.925  10.78900
+127      3       1    A1 1965    BEPA  17 0.465  11.25400
+128      3       1    A1 1966    BEPA  18 0.105  11.35900
+129      3       1    A1 1967    BEPA  19 0.275  11.63400
+130      3       1    A1 1968    BEPA  20 0.420  12.05400
+131      3       1    A1 1969    BEPA  21 0.710  12.76400
+132      3       1    A1 1970    BEPA  22 0.760  13.52400
+133      3       1    A1 1971    BEPA  23 0.435  13.95900
+134      3       1    A1 1972    BEPA  24 0.300  14.25900
+135      3       1    A1 1973    BEPA  25 0.770  15.02900
+136      3       1    A1 1974    BEPA  26 0.675  15.70400
+137      3       1    A1 1975    BEPA  27 1.085  16.78900
+138      3       1    A1 1976    BEPA  28 0.085  16.87400
+139      3       1    A1 1977    BEPA  29 0.065  16.93900
+140      3       1    A1 1978    BEPA  30 0.375  17.31400
+141      3       1    A1 1979    BEPA  31 1.080  18.39400
+142      3       1    A1 1980    BEPA  32 0.760  19.15400
+143      3       1    A1 1981    BEPA  33 0.455  19.60900
+144      3       1    A1 1982    BEPA  34 0.800  20.40900
+145      3       1    A1 1983    BEPA  35 1.350  21.75900
+146      3       1    A1 1984    BEPA  36 0.615  22.37400
+147      3       1    A1 1985    BEPA  37 0.905  23.27900
+148      3       1    A1 1986    BEPA  38 1.020  24.29900
+149      3       1    A1 1987    BEPA  39 0.905  25.20400
+150      3       1    A1 1988    BEPA  40 0.975  26.17900
+151      3       1    A1 1989    BEPA  41 1.200  27.37900
+152      3       1    A1 1990    BEPA  42 1.395  28.77400
+153      3       1    A1 1991    BEPA  43 1.240  30.01400
+154      3       1    A1 1992    BEPA  44 1.160  31.17400
+155      3       1    A1 1993    BEPA  45 0.955  32.12900
+156      3       1    A1 1994    BEPA  46 1.120  33.24900
+157      3       1    A1 1995    BEPA  47 1.460  34.70900
+158      3       1    A1 1996    BEPA  48 1.075  35.78400
+159      3       1    A1 1997    BEPA  49 1.385  37.16900
+160      3       1    A1 1998    BEPA  50 0.910  38.07900
+161      3       1    A1 1999    BEPA  51 0.765  38.84400
+162      3       1    A1 2000    BEPA  52 1.365  40.20900
+163      3       1    A1 2001    BEPA  53 1.055  41.26400
+164      3       1    A1 2002    BEPA  54 0.345  41.60900
+165      3       1    A1 2003    BEPA  55 1.010  42.61900
+166      3       1    A1 2004    BEPA  56 0.710  43.32900
+167      3       1    A1 2005    BEPA  57 0.790  44.11900
+168      3       1    A1 2006    BEPA  58 0.920  45.03900
+169      3       1    A1 2007    BEPA  59 0.805  45.84400
+170      4       1    A1 1897    BEPA   9 0.835  24.15600
+171      4       1    A1 1898    BEPA  10 0.465  24.62100
+172      4       1    A1 1899    BEPA  11 0.665  25.28600
+173      4       1    A1 1900    BEPA  12 0.660  25.94600
+174      4       1    A1 1901    BEPA  13 0.880  26.82600
+175      4       1    A1 1902    BEPA  14 0.545  27.37100
+176      4       1    A1 1903    BEPA  15 0.495  27.86600
+177      4       1    A1 1904    BEPA  16 1.115  28.98100
+178      4       1    A1 1905    BEPA  17 0.755  29.73600
+179      4       1    A1 1906    BEPA  18 0.735  30.47100
+180      4       1    A1 1907    BEPA  19 0.710  31.18100
+181      4       1    A1 1908    BEPA  20 0.540  31.72100
+182      4       1    A1 1909    BEPA  21 0.305  32.02600
+183      4       1    A1 1910    BEPA  22 0.075  32.10100
+184      4       1    A1 1911    BEPA  23 0.885  32.98600
+185      4       1    A1 1912    BEPA  24 0.775  33.76100
+186      4       1    A1 1913    BEPA  25 0.670  34.43100
+187      4       1    A1 1914    BEPA  26 0.370  34.80100
+188      4       1    A1 1915    BEPA  27 0.390  35.19100
+189      4       1    A1 1916    BEPA  28 0.040  35.23100
+190      4       1    A1 1917    BEPA  29 0.805  36.03600
+191      4       1    A1 1918    BEPA  30 0.895  36.93100
+192      4       1    A1 1919    BEPA  31 0.250  37.18100
+193      4       1    A1 1920    BEPA  32 0.185  37.36600
+194      4       1    A1 1921    BEPA  33 0.160  37.52600
+195      4       1    A1 1922    BEPA  34 0.465  37.99100
+196      4       1    A1 1923    BEPA  35 0.530  38.52100
+197      4       1    A1 1924    BEPA  36 0.255  38.77600
+198      4       1    A1 1925    BEPA  37 0.210  38.98600
+199      4       1    A1 1926    BEPA  38 0.440  39.42600
+200      4       1    A1 1927    BEPA  39 0.020  39.44600
+201      4       1    A1 1928    BEPA  40 0.100  39.54600
+202      4       1    A1 1929    BEPA  41 0.030  39.57600
+203      4       1    A1 1930    BEPA  42 0.045  39.62100
+204      4       1    A1 1931    BEPA  43 0.385  40.00600
+205      4       1    A1 1932    BEPA  44 0.020  40.02600
+206      4       1    A1 1933    BEPA  45 0.530  40.55600
+207      4       1    A1 1934    BEPA  46 0.310  40.86600
+208      4       1    A1 1935    BEPA  47 0.225  41.09100
+209      4       1    A1 1936    BEPA  48 0.395  41.48600
+210      4       1    A1 1937    BEPA  49 0.290  41.77600
+211      4       1    A1 1938    BEPA  50 0.180  41.95600
+212      4       1    A1 1939    BEPA  51 0.215  42.17100
+213      4       1    A1 1940    BEPA  52 0.225  42.39600
+214      4       1    A1 1941    BEPA  53 0.360  42.75600
+215      4       1    A1 1942    BEPA  54 0.500  43.25600
+216      4       1    A1 1943    BEPA  55 0.245  43.50100
+217      4       1    A1 1944    BEPA  56 0.215  43.71600
+218      4       1    A1 1945    BEPA  57 0.410  44.12600
+219      4       1    A1 1946    BEPA  58 0.615  44.74100
+220      4       1    A1 1947    BEPA  59 0.450  45.19100
+221      4       1    A1 1948    BEPA  60 0.610  45.80100
+222      4       1    A1 1949    BEPA  61 0.295  46.09600
+223      4       1    A1 1950    BEPA  62 0.190  46.28600
+224      4       1    A1 1951    BEPA  63 0.475  46.76100
+225      4       1    A1 1952    BEPA  64 0.335  47.09600
+226      4       1    A1 1953    BEPA  65 0.205  47.30100
+227      4       1    A1 1954    BEPA  66 0.145  47.44600
+228      4       1    A1 1955    BEPA  67 0.190  47.63600
+229      4       1    A1 1956    BEPA  68 0.355  47.99100
+230      4       1    A1 1957    BEPA  69 0.515  48.50600
+231      4       1    A1 1958    BEPA  70 0.350  48.85600
+232      4       1    A1 1959    BEPA  71 0.210  49.06600
+233      4       1    A1 1960    BEPA  72 0.300  49.36600
+234      4       1    A1 1961    BEPA  73 0.280  49.64600
+235      4       1    A1 1962    BEPA  74 0.530  50.17600
+236      4       1    A1 1963    BEPA  75 0.075  50.25100
+237      4       1    A1 1964    BEPA  76 0.130  50.38100
+238      4       1    A1 1965    BEPA  77 0.350  50.73100
+239      4       1    A1 1966    BEPA  78 0.185  50.91600
+240      4       1    A1 1967    BEPA  79 0.020  50.93600
+241      4       1    A1 1968    BEPA  80 0.165  51.10100
+242      4       1    A1 1969    BEPA  81 0.450  51.55100
+243      4       1    A1 1970    BEPA  82 0.475  52.02600
+244      4       1    A1 1971    BEPA  83 0.140  52.16600
+245      4       1    A1 1972    BEPA  84 0.150  52.31600
+246      4       1    A1 1973    BEPA  85 0.190  52.50600
+247      4       1    A1 1974    BEPA  86 0.160  52.66600
+248      4       1    A1 1975    BEPA  87 0.035  52.70100
+249      4       1    A1 1976    BEPA  88 0.165  52.86600
+250      4       1    A1 1977    BEPA  89 0.225  53.09100
+251      4       1    A1 1978    BEPA  90 0.100  53.19100
+252      4       1    A1 1979    BEPA  91 0.350  53.54100
+253      4       1    A1 1980    BEPA  92 0.250  53.79100
+254      4       1    A1 1981    BEPA  93 0.210  54.00100
+255      4       1    A1 1982    BEPA  94 0.735  54.73600
+256      4       1    A1 1983    BEPA  95 0.370  55.10600
+257      4       1    A1 1984    BEPA  96 0.155  55.26100
+258      4       1    A1 1985    BEPA  97 0.210  55.47100
+259      4       1    A1 1986    BEPA  98 0.165  55.63600
+260      4       1    A1 1987    BEPA  99 0.170  55.80600
+261      4       1    A1 1988    BEPA 100 0.220  56.02600
+262      4       1    A1 1989    BEPA 101 0.490  56.51600
+263      4       1    A1 1990    BEPA 102 0.145  56.66100
+264      4       1    A1 1991    BEPA 103 0.100  56.76100
+265      4       1    A1 1992    BEPA 104 0.165  56.92600
+266      4       1    A1 1993    BEPA 105 0.375  57.30100
+267      4       1    A1 1994    BEPA 106 0.500  57.80100
+268      4       1    A1 1995    BEPA 107 0.225  58.02600
+269      4       1    A1 1996    BEPA 108 0.435  58.46100
+270      4       1    A1 1997    BEPA 109 0.530  58.99100
+271      4       1    A1 1998    BEPA 110 0.430  59.42100
+272      4       1    A1 1999    BEPA 111 0.580  60.00100
+273      4       1    A1 2000    BEPA 112 0.835  60.83600
+274      4       1    A1 2001    BEPA 113 0.270  61.10600
+275      4       1    A1 2002    BEPA 114 0.695  61.80100
+276      4       1    A1 2003    BEPA 115 1.345  63.14600
+277      4       1    A1 2004    BEPA 116 0.750  63.89600
+278      4       1    A1 2005    BEPA 117 0.715  64.61100
+279      4       1    A1 2006    BEPA 118 0.595  65.20600
+280      4       1    A1 2007    BEPA 119 0.690  65.89600
+281      5       1    A1 1907    BEPA   1 0.895  32.07600
+282      5       1    A1 1908    BEPA   2 0.165  32.24100
+283      5       1    A1 1909    BEPA   3 0.070  32.31100
+284      5       1    A1 1910    BEPA   4 0.325  32.63600
+285      5       1    A1 1911    BEPA   5 0.400  33.03600
+286      5       1    A1 1912    BEPA   6 0.870  33.90600
+287      5       1    A1 1913    BEPA   7 1.185  35.09100
+288      5       1    A1 1914    BEPA   8 0.810  35.90100
+289      5       1    A1 1915    BEPA   9 0.530  36.43100
+290      5       1    A1 1916    BEPA  10 0.645  37.07600
+291      5       1    A1 1917    BEPA  11 0.690  37.76600
+292      5       1    A1 1918    BEPA  12 0.395  38.16100
+293      5       1    A1 1919    BEPA  13 0.655  38.81600
+294      5       1    A1 1920    BEPA  14 0.440  39.25600
+295      5       1    A1 1921    BEPA  15 1.250  40.50600
+296      5       1    A1 1922    BEPA  16 0.380  40.88600
+297      5       1    A1 1923    BEPA  17 0.215  41.10100
+298      5       1    A1 1924    BEPA  18 0.960  42.06100
+299      5       1    A1 1925    BEPA  19 0.745  42.80600
+300      5       1    A1 1926    BEPA  20 0.975  43.78100
+301      5       1    A1 1927    BEPA  21 1.275  45.05600
+302      5       1    A1 1928    BEPA  22 0.970  46.02600
+303      5       1    A1 1929    BEPA  23 0.975  47.00100
+304      5       1    A1 1930    BEPA  24 0.770  47.77100
+305      5       1    A1 1931    BEPA  25 1.125  48.89600
+306      5       1    A1 1932    BEPA  26 1.435  50.33100
+307      5       1    A1 1933    BEPA  27 0.955  51.28600
+308      5       1    A1 1934    BEPA  28 0.945  52.23100
+309      5       1    A1 1935    BEPA  29 0.925  53.15600
+310      5       1    A1 1936    BEPA  30 0.855  54.01100
+311      5       1    A1 1937    BEPA  31 0.720  54.73100
+312      5       1    A1 1938    BEPA  32 1.540  56.27100
+313      5       1    A1 1939    BEPA  33 0.975  57.24600
+314      5       1    A1 1940    BEPA  34 0.725  57.97100
+315      5       1    A1 1941    BEPA  35 0.480  58.45100
+316      5       1    A1 1942    BEPA  36 0.660  59.11100
+317      5       1    A1 1943    BEPA  37 1.090  60.20100
+318      5       1    A1 1944    BEPA  38 1.080  61.28100
+319      5       1    A1 1945    BEPA  39 0.980  62.26100
+320      5       1    A1 1946    BEPA  40 0.775  63.03600
+321      5       1    A1 1947    BEPA  41 0.595  63.63100
+322      5       1    A1 1948    BEPA  42 0.795  64.42600
+323      5       1    A1 1949    BEPA  43 1.105  65.53100
+324      5       1    A1 1950    BEPA  44 1.220  66.75100
+325      5       1    A1 1951    BEPA  45 0.230  66.98100
+326      5       1    A1 1952    BEPA  46 0.165  67.14600
+327      5       1    A1 1953    BEPA  47 0.570  67.71600
+328      5       1    A1 1954    BEPA  48 0.545  68.26100
+329      5       1    A1 1955    BEPA  49 0.540  68.80100
+330      5       1    A1 1956    BEPA  50 0.640  69.44100
+331      5       1    A1 1957    BEPA  51 0.285  69.72600
+332      5       1    A1 1958    BEPA  52 0.595  70.32100
+333      5       1    A1 1959    BEPA  53 0.760  71.08100
+334      5       1    A1 1960    BEPA  54 0.370  71.45100
+335      5       1    A1 1961    BEPA  55 0.555  72.00600
+336      5       1    A1 1962    BEPA  56 0.420  72.42600
+337      5       1    A1 1963    BEPA  57 0.750  73.17600
+338      5       1    A1 1964    BEPA  58 0.995  74.17100
+339      5       1    A1 1965    BEPA  59 0.470  74.64100
+340      5       1    A1 1966    BEPA  60 0.370  75.01100
+341      5       1    A1 1967    BEPA  61 0.235  75.24600
+342      5       1    A1 1968    BEPA  62 0.665  75.91100
+343      5       1    A1 1969    BEPA  63 0.710  76.62100
+344      5       1    A1 1970    BEPA  64 0.585  77.20600
+345      5       1    A1 1971    BEPA  65 0.445  77.65100
+346      5       1    A1 1972    BEPA  66 0.535  78.18600
+347      5       1    A1 1973    BEPA  67 0.655  78.84100
+348      5       1    A1 1974    BEPA  68 0.775  79.61600
+349      5       1    A1 1975    BEPA  69 0.380  79.99600
+350      5       1    A1 1976    BEPA  70 0.320  80.31600
+351      5       1    A1 1977    BEPA  71 0.620  80.93600
+352      5       1    A1 1978    BEPA  72 0.695  81.63100
+353      5       1    A1 1979    BEPA  73 0.545  82.17600
+354      5       1    A1 1980    BEPA  74 0.770  82.94600
+355      5       1    A1 1981    BEPA  75 0.020  82.96600
+356      5       1    A1 1982    BEPA  76 0.345  83.31100
+357      5       1    A1 1983    BEPA  77 0.290  83.60100
+358      5       1    A1 1984    BEPA  78 0.710  84.31100
+359      5       1    A1 1985    BEPA  79 0.570  84.88100
+360      5       1    A1 1986    BEPA  80 0.870  85.75100
+361      5       1    A1 1987    BEPA  81 1.150  86.90100
+362      5       1    A1 1988    BEPA  82 1.105  88.00600
+363      5       1    A1 1989    BEPA  83 1.330  89.33600
+364      5       1    A1 1990    BEPA  84 0.935  90.27100
+365      5       1    A1 1991    BEPA  85 0.895  91.16600
+366      5       1    A1 1992    BEPA  86 0.705  91.87100
+367      5       1    A1 1993    BEPA  87 0.600  92.47100
+368      5       1    A1 1994    BEPA  88 1.595  94.06600
+369      5       1    A1 1995    BEPA  89 1.380  95.44600
+370      5       1    A1 1996    BEPA  90 1.515  96.96100
+371      5       1    A1 1997    BEPA  91 1.295  98.25600
+372      5       1    A1 1998    BEPA  92 1.120  99.37600
+373      5       1    A1 1999    BEPA  93 0.710 100.08600
+374      5       1    A1 2000    BEPA  94 1.535 101.62100
+375      5       1    A1 2001    BEPA  95 0.770 102.39100
+376      5       1    A1 2002    BEPA  96 1.940 104.33100
+377      5       1    A1 2003    BEPA  97 1.245 105.57600
+378      5       1    A1 2004    BEPA  98 1.310 106.88600
+379      5       1    A1 2005    BEPA  99 1.235 108.12100
+380      5       1    A1 2006    BEPA 100 1.265 109.38600
+381      5       1    A1 2007    BEPA 101 1.040 110.42600
+382      6       1    A1 1954    PIGL   1 0.380   2.99200
+383      6       1    A1 1955    PIGL   2 0.460   3.45200
+384      6       1    A1 1956    PIGL   3 0.515   3.96700
+385      6       1    A1 1957    PIGL   4 0.825   4.79200
+386      6       1    A1 1958    PIGL   5 0.190   4.98200
+387      6       1    A1 1959    PIGL   6 0.400   5.38200
+388      6       1    A1 1960    PIGL   7 0.295   5.67700
+389      6       1    A1 1961    PIGL   8 0.330   6.00700
+390      6       1    A1 1962    PIGL   9 0.455   6.46200
+391      6       1    A1 1963    PIGL  10 0.600   7.06200
+392      6       1    A1 1964    PIGL  11 0.850   7.91200
+393      6       1    A1 1965    PIGL  12 1.330   9.24200
+394      6       1    A1 1966    PIGL  13 1.210  10.45200
+395      6       1    A1 1967    PIGL  14 1.255  11.70700
+396      6       1    A1 1968    PIGL  15 1.105  12.81200
+397      6       1    A1 1969    PIGL  16 1.395  14.20700
+398      6       1    A1 1970    PIGL  17 1.375  15.58200
+399      6       1    A1 1971    PIGL  18 1.045  16.62700
+400      6       1    A1 1972    PIGL  19 1.340  17.96700
+401      6       1    A1 1973    PIGL  20 1.745  19.71200
+402      6       1    A1 1974    PIGL  21 1.905  21.61700
+403      6       1    A1 1975    PIGL  22 1.755  23.37200
+404      6       1    A1 1976    PIGL  23 1.525  24.89700
+405      6       1    A1 1977    PIGL  24 0.300  25.19700
+406      6       1    A1 1978    PIGL  25 0.580  25.77700
+407      6       1    A1 1979    PIGL  26 0.700  26.47700
+408      6       1    A1 1980    PIGL  27 0.400  26.87700
+409      6       1    A1 1981    PIGL  28 0.685  27.56200
+410      6       1    A1 1982    PIGL  29 0.700  28.26200
+411      6       1    A1 1983    PIGL  30 1.125  29.38700
+412      6       1    A1 1984    PIGL  31 1.575  30.96200
+413      6       1    A1 1985    PIGL  32 1.305  32.26700
+414      6       1    A1 1986    PIGL  33 0.715  32.98200
+415      6       1    A1 1987    PIGL  34 0.765  33.74700
+416      6       1    A1 1988    PIGL  35 0.770  34.51700
+417      6       1    A1 1989    PIGL  36 0.390  34.90700
+418      6       1    A1 1990    PIGL  37 0.365  35.27200
+419      6       1    A1 1991    PIGL  38 0.550  35.82200
+420      6       1    A1 1992    PIGL  39 0.715  36.53700
+421      6       1    A1 1993    PIGL  40 0.480  37.01700
+422      6       1    A1 1994    PIGL  41 0.290  37.30700
+423      6       1    A1 1995    PIGL  42 0.125  37.43200
+424      6       1    A1 1996    PIGL  43 0.200  37.63200
+425      6       1    A1 1997    PIGL  44 0.720  38.35200
+426      6       1    A1 1998    PIGL  45 0.915  39.26700
+427      6       1    A1 1999    PIGL  46 0.845  40.11200
+428      6       1    A1 2000    PIGL  47 1.210  41.32200
+429      6       1    A1 2001    PIGL  48 1.185  42.50700
+430      6       1    A1 2002    PIGL  49 1.560  44.06700
+431      6       1    A1 2003    PIGL  50 2.360  46.42700
+432      6       1    A1 2004    PIGL  51 2.490  48.91700
+433      6       1    A1 2005    PIGL  52 2.050  50.96700
+434      6       1    A1 2006    PIGL  53 2.355  53.32200
+435      6       1    A1 2007    PIGL  54 1.700  55.02200
+436      7       1    A1 1940    PIGL   1 0.550   6.31400
+437      7       1    A1 1941    PIGL   2 0.535   6.84900
+438      7       1    A1 1942    PIGL   3 1.025   7.87400
+439      7       1    A1 1943    PIGL   4 1.515   9.38900
+440      7       1    A1 1944    PIGL   5 1.855  11.24400
+441      7       1    A1 1945    PIGL   6 1.760  13.00400
+442      7       1    A1 1946    PIGL   7 1.555  14.55900
+443      7       1    A1 1947    PIGL   8 1.515  16.07400
+444      7       1    A1 1948    PIGL   9 1.075  17.14900
+445      7       1    A1 1949    PIGL  10 1.145  18.29400
+446      7       1    A1 1950    PIGL  11 1.105  19.39900
+447      7       1    A1 1951    PIGL  12 0.950  20.34900
+448      7       1    A1 1952    PIGL  13 0.715  21.06400
+449      7       1    A1 1953    PIGL  14 0.645  21.70900
+450      7       1    A1 1954    PIGL  15 0.380  22.08900
+451      7       1    A1 1955    PIGL  16 0.480  22.56900
+452      7       1    A1 1956    PIGL  17 0.495  23.06400
+453      7       1    A1 1957    PIGL  18 0.750  23.81400
+454      7       1    A1 1958    PIGL  19 0.455  24.26900
+455      7       1    A1 1959    PIGL  20 0.330  24.59900
+456      7       1    A1 1960    PIGL  21 0.100  24.69900
+457      7       1    A1 1961    PIGL  22 0.105  24.80400
+458      7       1    A1 1962    PIGL  23 0.180  24.98400
+459      7       1    A1 1963    PIGL  24 0.185  25.16900
+460      7       1    A1 1964    PIGL  25 0.100  25.26900
+461      7       1    A1 1965    PIGL  26 0.240  25.50900
+462      7       1    A1 1966    PIGL  27 0.210  25.71900
+463      7       1    A1 1967    PIGL  28 0.265  25.98400
+464      7       1    A1 1968    PIGL  29 0.590  26.57400
+465      7       1    A1 1969    PIGL  30 0.745  27.31900
+466      7       1    A1 1970    PIGL  31 0.625  27.94400
+467      7       1    A1 1971    PIGL  32 0.430  28.37400
+468      7       1    A1 1972    PIGL  33 0.335  28.70900
+469      7       1    A1 1973    PIGL  34 0.635  29.34400
+470      7       1    A1 1974    PIGL  35 0.695  30.03900
+471      7       1    A1 1975    PIGL  36 0.745  30.78400
+472      7       1    A1 1976    PIGL  37 0.495  31.27900
+473      7       1    A1 1977    PIGL  38 0.075  31.35400
+474      7       1    A1 1978    PIGL  39 0.340  31.69400
+475      7       1    A1 1979    PIGL  40 0.515  32.20900
+476      7       1    A1 1980    PIGL  41 0.375  32.58400
+477      7       1    A1 1981    PIGL  42 0.645  33.22900
+478      7       1    A1 1982    PIGL  43 0.810  34.03900
+479      7       1    A1 1983    PIGL  44 1.135  35.17400
+480      7       1    A1 1984    PIGL  45 1.215  36.38900
+481      7       1    A1 1985    PIGL  46 1.455  37.84400
+482      7       1    A1 1986    PIGL  47 1.190  39.03400
+483      7       1    A1 1987    PIGL  48 0.750  39.78400
+484      7       1    A1 1988    PIGL  49 0.775  40.55900
+485      7       1    A1 1989    PIGL  50 0.765  41.32400
+486      7       1    A1 1990    PIGL  51 0.540  41.86400
+487      7       1    A1 1991    PIGL  52 0.500  42.36400
+488      7       1    A1 1992    PIGL  53 0.995  43.35900
+489      7       1    A1 1993    PIGL  54 1.230  44.58900
+490      7       1    A1 1994    PIGL  55 1.025  45.61400
+491      7       1    A1 1995    PIGL  56 0.395  46.00900
+492      7       1    A1 1996    PIGL  57 0.240  46.24900
+493      7       1    A1 1997    PIGL  58 0.730  46.97900
+494      7       1    A1 1998    PIGL  59 1.345  48.32400
+495      7       1    A1 1999    PIGL  60 1.945  50.26900
+496      7       1    A1 2000    PIGL  61 1.870  52.13900
+497      7       1    A1 2001    PIGL  62 0.295  52.43400
+498      7       1    A1 2002    PIGL  63 0.230  52.66400
+499      7       1    A1 2003    PIGL  64 0.240  52.90400
+500      7       1    A1 2004    PIGL  65 0.525  53.42900
+501      7       1    A1 2005    PIGL  66 0.660  54.08900
+502      7       1    A1 2006    PIGL  67 0.955  55.04400
+503      7       1    A1 2007    PIGL  68 0.860  55.90400
+504      8       1    A1 1967    ABBA   1 1.935  12.38000
+505      8       1    A1 1968    ABBA   2 1.030  13.41000
+506      8       1    A1 1969    ABBA   3 1.325  14.73500
+507      8       1    A1 1970    ABBA   4 0.540  15.27500
+508      8       1    A1 1971    ABBA   5 0.845  16.12000
+509      8       1    A1 1972    ABBA   6 0.930  17.05000
+510      8       1    A1 1973    ABBA   7 1.085  18.13500
+511      8       1    A1 1974    ABBA   8 0.880  19.01500
+512      8       1    A1 1975    ABBA   9 1.145  20.16000
+513      8       1    A1 1976    ABBA  10 1.160  21.32000
+514      8       1    A1 1977    ABBA  11 0.500  21.82000
+515      8       1    A1 1978    ABBA  12 0.865  22.68500
+516      8       1    A1 1979    ABBA  13 1.170  23.85500
+517      8       1    A1 1980    ABBA  14 0.910  24.76500
+518      8       1    A1 1981    ABBA  15 1.040  25.80500
+519      8       1    A1 1982    ABBA  16 1.080  26.88500
+520      8       1    A1 1983    ABBA  17 1.305  28.19000
+521      8       1    A1 1984    ABBA  18 1.580  29.77000
+522      8       1    A1 1985    ABBA  19 1.055  30.82500
+523      8       1    A1 1986    ABBA  20 0.905  31.73000
+524      8       1    A1 1987    ABBA  21 0.745  32.47500
+525      8       1    A1 1988    ABBA  22 0.000  32.47500
+526      8       1    A1 1989    ABBA  23 0.600  33.07500
+527      8       1    A1 1990    ABBA  24 0.575  33.65000
+528      8       1    A1 1991    ABBA  25 0.695  34.34500
+529      8       1    A1 1992    ABBA  26 0.425  34.77000
+530      8       1    A1 1993    ABBA  27 0.500  35.27000
+531      8       1    A1 1994    ABBA  28 0.455  35.72500
+532      8       1    A1 1995    ABBA  29 0.225  35.95000
+533      8       1    A1 1996    ABBA  30 0.170  36.12000
+534      8       1    A1 1997    ABBA  31 0.060  36.18000
+535      8       1    A1 1998    ABBA  32 0.265  36.44500
+536      8       1    A1 1999    ABBA  33 0.175  36.62000
+537      8       1    A1 2000    ABBA  34 0.310  36.93000
+538      8       1    A1 2001    ABBA  35 0.545  37.47500
+539      8       1    A1 2002    ABBA  36 0.875  38.35000
+540      8       1    A1 2003    ABBA  37 0.680  39.03000
+541      8       1    A1 2004    ABBA  38 0.700  39.73000
+542      8       1    A1 2005    ABBA  39 1.070  40.80000
+543      8       1    A1 2006    ABBA  40 1.165  41.96500
+544      8       1    A1 2007    ABBA  41 1.205  43.17000
+545      9       1    A1 1970    ABBA   1 0.870  48.38575
+546      9       1    A1 1971    ABBA   2 0.305  48.69075
+547      9       1    A1 1972    ABBA   3 0.395  49.08575
+548      9       1    A1 1973    ABBA   4 0.490  49.57575
+549      9       1    A1 1974    ABBA   5 0.435  50.01075
+550      9       1    A1 1975    ABBA   6 0.595  50.60575
+551      9       1    A1 1976    ABBA   7 0.345  50.95075
+552      9       1    A1 1977    ABBA   8 0.235  51.18575
+553      9       1    A1 1978    ABBA   9 0.405  51.59075
+554      9       1    A1 1979    ABBA  10 0.370  51.96075
+555      9       1    A1 1980    ABBA  11 0.290  52.25075
+556      9       1    A1 1981    ABBA  12 0.410  52.66075
+557      9       1    A1 1982    ABBA  13 0.350  53.01075
+558      9       1    A1 1983    ABBA  14 0.470  53.48075
+559      9       1    A1 1984    ABBA  15 0.600  54.08075
+560      9       1    A1 1985    ABBA  16 0.245  54.32575
+561      9       1    A1 1986    ABBA  17 0.295  54.62075
+562      9       1    A1 1987    ABBA  18 0.350  54.97075
+563      9       1    A1 1988    ABBA  19 0.215  55.18575
+564      9       1    A1 1989    ABBA  20 0.380  55.56575
+565      9       1    A1 1990    ABBA  21 0.400  55.96575
+566      9       1    A1 1991    ABBA  22 0.425  56.39075
+567      9       1    A1 1992    ABBA  23 0.410  56.80075
+568      9       1    A1 1993    ABBA  24 0.540  57.34075
+569      9       1    A1 1994    ABBA  25 0.415  57.75575
+570      9       1    A1 1995    ABBA  26 0.155  57.91075
+571      9       1    A1 1996    ABBA  27 0.085  57.99575
+572      9       1    A1 1997    ABBA  28 0.185  58.18075
+573      9       1    A1 1998    ABBA  29 0.155  58.33575
+574      9       1    A1 1999    ABBA  30 0.325  58.66075
+575      9       1    A1 2000    ABBA  31 0.275  58.93575
+576      9       1    A1 2001    ABBA  32 0.205  59.14075
+577      9       1    A1 2002    ABBA  33 0.270  59.41075
+578      9       1    A1 2003    ABBA  34 0.255  59.66575
+579      9       1    A1 2004    ABBA  35 0.325  59.99075
+580      9       1    A1 2005    ABBA  36 0.700  60.69075
+581      9       1    A1 2006    ABBA  37 0.650  61.34075
+582      9       1    A1 2007    ABBA  38 0.600  61.94075
+583     10       1    A1 1897    BEPA   9 0.815  28.77800
+584     10       1    A1 1898    BEPA  10 0.635  29.41300
+585     10       1    A1 1899    BEPA  11 0.340  29.75300
+586     10       1    A1 1900    BEPA  12 0.830  30.58300
+587     10       1    A1 1901    BEPA  13 0.415  30.99800
+588     10       1    A1 1902    BEPA  14 0.370  31.36800
+589     10       1    A1 1903    BEPA  15 0.360  31.72800
+590     10       1    A1 1904    BEPA  16 0.375  32.10300
+591     10       1    A1 1905    BEPA  17 0.225  32.32800
+592     10       1    A1 1906    BEPA  18 0.180  32.50800
+593     10       1    A1 1907    BEPA  19 1.060  33.56800
+594     10       1    A1 1908    BEPA  20 0.570  34.13800
+595     10       1    A1 1909    BEPA  21 0.320  34.45800
+596     10       1    A1 1910    BEPA  22 0.330  34.78800
+597     10       1    A1 1911    BEPA  23 1.070  35.85800
+598     10       1    A1 1912    BEPA  24 0.925  36.78300
+599     10       1    A1 1913    BEPA  25 1.195  37.97800
+600     10       1    A1 1914    BEPA  26 1.180  39.15800
+601     10       1    A1 1915    BEPA  27 1.475  40.63300
+602     10       1    A1 1916    BEPA  28 0.640  41.27300
+603     10       1    A1 1917    BEPA  29 0.840  42.11300
+604     10       1    A1 1918    BEPA  30 0.765  42.87800
+605     10       1    A1 1919    BEPA  31 0.660  43.53800
+606     10       1    A1 1920    BEPA  32 1.035  44.57300
+607     10       1    A1 1921    BEPA  33 0.700  45.27300
+608     10       1    A1 1922    BEPA  34 1.535  46.80800
+609     10       1    A1 1923    BEPA  35 0.515  47.32300
+610     10       1    A1 1924    BEPA  36 0.605  47.92800
+611     10       1    A1 1925    BEPA  37 0.960  48.88800
+612     10       1    A1 1926    BEPA  38 0.975  49.86300
+613     10       1    A1 1927    BEPA  39 0.915  50.77800
+614     10       1    A1 1928    BEPA  40 1.125  51.90300
+615     10       1    A1 1929    BEPA  41 1.105  53.00800
+616     10       1    A1 1930    BEPA  42 1.265  54.27300
+617     10       1    A1 1931    BEPA  43 0.580  54.85300
+618     10       1    A1 1932    BEPA  44 1.295  56.14800
+619     10       1    A1 1933    BEPA  45 1.310  57.45800
+620     10       1    A1 1934    BEPA  46 1.060  58.51800
+621     10       1    A1 1935    BEPA  47 1.355  59.87300
+622     10       1    A1 1936    BEPA  48 0.425  60.29800
+623     10       1    A1 1937    BEPA  49 0.500  60.79800
+624     10       1    A1 1938    BEPA  50 1.275  62.07300
+625     10       1    A1 1939    BEPA  51 1.065  63.13800
+626     10       1    A1 1940    BEPA  52 0.675  63.81300
+627     10       1    A1 1941    BEPA  53 1.025  64.83800
+628     10       1    A1 1942    BEPA  54 0.540  65.37800
+629     10       1    A1 1943    BEPA  55 0.490  65.86800
+630     10       1    A1 1944    BEPA  56 0.995  66.86300
+631     10       1    A1 1945    BEPA  57 1.095  67.95800
+632     10       1    A1 1946    BEPA  58 0.950  68.90800
+633     10       1    A1 1947    BEPA  59 0.810  69.71800
+634     10       1    A1 1948    BEPA  60 0.800  70.51800
+635     10       1    A1 1949    BEPA  61 1.205  71.72300
+636     10       1    A1 1950    BEPA  62 1.595  73.31800
+637     10       1    A1 1951    BEPA  63 1.275  74.59300
+638     10       1    A1 1952    BEPA  64 0.420  75.01300
+639     10       1    A1 1953    BEPA  65 0.600  75.61300
+640     10       1    A1 1954    BEPA  66 0.540  76.15300
+641     10       1    A1 1955    BEPA  67 0.970  77.12300
+642     10       1    A1 1956    BEPA  68 0.985  78.10800
+643     10       1    A1 1957    BEPA  69 1.110  79.21800
+644     10       1    A1 1958    BEPA  70 0.760  79.97800
+645     10       1    A1 1959    BEPA  71 0.770  80.74800
+646     10       1    A1 1960    BEPA  72 0.520  81.26800
+647     10       1    A1 1961    BEPA  73 0.385  81.65300
+648     10       1    A1 1962    BEPA  74 0.275  81.92800
+649     10       1    A1 1963    BEPA  75 0.515  82.44300
+650     10       1    A1 1964    BEPA  76 1.410  83.85300
+651     10       1    A1 1965    BEPA  77 0.965  84.81800
+652     10       1    A1 1966    BEPA  78 0.855  85.67300
+653     10       1    A1 1967    BEPA  79 0.920  86.59300
+654     10       1    A1 1968    BEPA  80 0.535  87.12800
+655     10       1    A1 1969    BEPA  81 0.955  88.08300
+656     10       1    A1 1970    BEPA  82 0.975  89.05800
+657     10       1    A1 1971    BEPA  83 0.965  90.02300
+658     10       1    A1 1972    BEPA  84 0.915  90.93800
+659     10       1    A1 1973    BEPA  85 0.540  91.47800
+660     10       1    A1 1974    BEPA  86 0.810  92.28800
+661     10       1    A1 1975    BEPA  87 1.320  93.60800
+662     10       1    A1 1976    BEPA  88 1.330  94.93800
+663     10       1    A1 1977    BEPA  89 0.785  95.72300
+664     10       1    A1 1978    BEPA  90 1.395  97.11800
+665     10       1    A1 1979    BEPA  91 1.105  98.22300
+666     10       1    A1 1980    BEPA  92 0.740  98.96300
+667     10       1    A1 1981    BEPA  93 0.285  99.24800
+668     10       1    A1 1982    BEPA  94 0.835 100.08300
+669     10       1    A1 1983    BEPA  95 0.745 100.82800
+670     10       1    A1 1984    BEPA  96 0.715 101.54300
+671     10       1    A1 1985    BEPA  97 0.980 102.52300
+672     10       1    A1 1986    BEPA  98 0.910 103.43300
+673     10       1    A1 1987    BEPA  99 0.520 103.95300
+674     10       1    A1 1988    BEPA 100 0.795 104.74800
+675     10       1    A1 1989    BEPA 101 0.615 105.36300
+676     10       1    A1 1990    BEPA 102 0.980 106.34300
+677     10       1    A1 1991    BEPA 103 0.750 107.09300
+678     10       1    A1 1992    BEPA 104 1.170 108.26300
+679     10       1    A1 1993    BEPA 105 0.915 109.17800
+680     10       1    A1 1994    BEPA 106 0.720 109.89800
+681     10       1    A1 1995    BEPA 107 0.890 110.78800
+682     10       1    A1 1996    BEPA 108 0.700 111.48800
+683     10       1    A1 1997    BEPA 109 0.695 112.18300
+684     10       1    A1 1998    BEPA 110 0.645 112.82800
+685     10       1    A1 1999    BEPA 111 0.550 113.37800
+686     10       1    A1 2000    BEPA 112 0.840 114.21800
+687     10       1    A1 2001    BEPA 113 0.535 114.75300
+688     10       1    A1 2002    BEPA 114 0.605 115.35800
+689     10       1    A1 2003    BEPA 115 0.690 116.04800
+690     10       1    A1 2004    BEPA 116 0.745 116.79300
+691     10       1    A1 2005    BEPA 117 0.600 117.39300
+692     10       1    A1 2006    BEPA 118 0.670 118.06300
+693     10       1    A1 2007    BEPA 119 0.655 118.71800
+694     11       1    A1 1919    BEPA  14 1.580   1.60600
+695     11       1    A1 1920    BEPA  15 0.640   2.24600
+696     11       1    A1 1921    BEPA  16 1.930   4.17600
+697     11       1    A1 1922    BEPA  17 0.600   4.77600
+698     11       1    A1 1923    BEPA  18 0.445   5.22100
+699     11       1    A1 1924    BEPA  19 0.720   5.94100
+700     11       1    A1 1925    BEPA  20 0.975   6.91600
+701     11       1    A1 1926    BEPA  21 0.900   7.81600
+702     11       1    A1 1927    BEPA  22 0.920   8.73600
+703     11       1    A1 1928    BEPA  23 0.820   9.55600
+704     11       1    A1 1929    BEPA  24 1.050  10.60600
+705     11       1    A1 1930    BEPA  25 0.810  11.41600
+706     11       1    A1 1931    BEPA  26 1.455  12.87100
+707     11       1    A1 1932    BEPA  27 1.680  14.55100
+708     11       1    A1 1933    BEPA  28 1.180  15.73100
+709     11       1    A1 1934    BEPA  29 1.305  17.03600
+710     11       1    A1 1935    BEPA  30 0.810  17.84600
+711     11       1    A1 1936    BEPA  31 0.105  17.95100
+712     11       1    A1 1937    BEPA  32 0.175  18.12600
+713     11       1    A1 1938    BEPA  33 0.805  18.93100
+714     11       1    A1 1939    BEPA  34 1.650  20.58100
+715     11       1    A1 1940    BEPA  35 0.650  21.23100
+716     11       1    A1 1941    BEPA  36 2.070  23.30100
+717     11       1    A1 1942    BEPA  37 0.985  24.28600
+718     11       1    A1 1943    BEPA  38 1.010  25.29600
+719     11       1    A1 1944    BEPA  39 1.555  26.85100
+720     11       1    A1 1945    BEPA  40 2.100  28.95100
+721     11       1    A1 1946    BEPA  41 1.775  30.72600
+722     11       1    A1 1947    BEPA  42 1.870  32.59600
+723     11       1    A1 1948    BEPA  43 1.970  34.56600
+724     11       1    A1 1949    BEPA  44 1.685  36.25100
+725     11       1    A1 1950    BEPA  45 1.800  38.05100
+726     11       1    A1 1951    BEPA  46 1.480  39.53100
+727     11       1    A1 1952    BEPA  47 0.355  39.88600
+728     11       1    A1 1953    BEPA  48 0.540  40.42600
+729     11       1    A1 1954    BEPA  49 0.775  41.20100
+730     11       1    A1 1955    BEPA  50 1.055  42.25600
+731     11       1    A1 1956    BEPA  51 1.370  43.62600
+732     11       1    A1 1957    BEPA  52 1.960  45.58600
+733     11       1    A1 1958    BEPA  53 1.140  46.72600
+734     11       1    A1 1959    BEPA  54 1.030  47.75600
+735     11       1    A1 1960    BEPA  55 0.690  48.44600
+736     11       1    A1 1961    BEPA  56 0.435  48.88100
+737     11       1    A1 1962    BEPA  57 1.380  50.26100
+738     11       1    A1 1963    BEPA  58 1.145  51.40600
+739     11       1    A1 1964    BEPA  59 0.765  52.17100
+740     11       1    A1 1965    BEPA  60 1.710  53.88100
+741     11       1    A1 1966    BEPA  61 1.050  54.93100
+742     11       1    A1 1967    BEPA  62 0.960  55.89100
+743     11       1    A1 1968    BEPA  63 0.425  56.31600
+744     11       1    A1 1969    BEPA  64 1.470  57.78600
+745     11       1    A1 1970    BEPA  65 1.190  58.97600
+746     11       1    A1 1971    BEPA  66 1.000  59.97600
+747     11       1    A1 1972    BEPA  67 1.180  61.15600
+748     11       1    A1 1973    BEPA  68 1.205  62.36100
+749     11       1    A1 1974    BEPA  69 0.925  63.28600
+750     11       1    A1 1975    BEPA  70 1.615  64.90100
+751     11       1    A1 1976    BEPA  71 1.225  66.12600
+752     11       1    A1 1977    BEPA  72 0.855  66.98100
+753     11       1    A1 1978    BEPA  73 1.010  67.99100
+754     11       1    A1 1979    BEPA  74 0.725  68.71600
+755     11       1    A1 1980    BEPA  75 0.685  69.40100
+756     11       1    A1 1981    BEPA  76 0.830  70.23100
+757     11       1    A1 1982    BEPA  77 0.870  71.10100
+758     11       1    A1 1983    BEPA  78 0.685  71.78600
+759     11       1    A1 1984    BEPA  79 0.655  72.44100
+760     11       1    A1 1985    BEPA  80 0.360  72.80100
+761     11       1    A1 1986    BEPA  81 0.595  73.39600
+762     11       1    A1 1987    BEPA  82 0.440  73.83600
+763     11       1    A1 1988    BEPA  83 1.155  74.99100
+764     11       1    A1 1989    BEPA  84 1.565  76.55600
+765     11       1    A1 1990    BEPA  85 1.095  77.65100
+766     11       1    A1 1991    BEPA  86 0.955  78.60600
+767     11       1    A1 1992    BEPA  87 1.015  79.62100
+768     11       1    A1 1993    BEPA  88 1.350  80.97100
+769     11       1    A1 1994    BEPA  89 1.255  82.22600
+770     11       1    A1 1995    BEPA  90 1.200  83.42600
+771     11       1    A1 1996    BEPA  91 1.135  84.56100
+772     11       1    A1 1997    BEPA  92 1.000  85.56100
+773     11       1    A1 1998    BEPA  93 0.780  86.34100
+774     11       1    A1 1999    BEPA  94 0.610  86.95100
+775     11       1    A1 2000    BEPA  95 0.465  87.41600
+776     11       1    A1 2001    BEPA  96 0.560  87.97600
+777     11       1    A1 2002    BEPA  97 0.520  88.49600
+778     11       1    A1 2003    BEPA  98 1.010  89.50600
+779     11       1    A1 2004    BEPA  99 0.515  90.02100
+780     11       1    A1 2005    BEPA 100 0.395  90.41600
+781     11       1    A1 2006    BEPA 101 0.565  90.98100
+782     11       1    A1 2007    BEPA 102 0.920  91.90100
+783     12       1    A1 1897    BEPA  15 0.600  42.35600
+784     12       1    A1 1898    BEPA  16 0.845  43.20100
+785     12       1    A1 1899    BEPA  17 0.660  43.86100
+786     12       1    A1 1900    BEPA  18 0.405  44.26600
+787     12       1    A1 1901    BEPA  19 0.615  44.88100
+788     12       1    A1 1902    BEPA  20 0.445  45.32600
+789     12       1    A1 1903    BEPA  21 0.320  45.64600
+790     12       1    A1 1904    BEPA  22 0.310  45.95600
+791     12       1    A1 1905    BEPA  23 0.565  46.52100
+792     12       1    A1 1906    BEPA  24 0.350  46.87100
+793     12       1    A1 1907    BEPA  25 0.545  47.41600
+794     12       1    A1 1908    BEPA  26 0.560  47.97600
+795     12       1    A1 1909    BEPA  27 0.245  48.22100
+796     12       1    A1 1910    BEPA  28 0.215  48.43600
+797     12       1    A1 1911    BEPA  29 0.340  48.77600
+798     12       1    A1 1912    BEPA  30 0.275  49.05100
+799     12       1    A1 1913    BEPA  31 0.625  49.67600
+800     12       1    A1 1914    BEPA  32 0.625  50.30100
+801     12       1    A1 1915    BEPA  33 0.375  50.67600
+802     12       1    A1 1916    BEPA  34 0.340  51.01600
+803     12       1    A1 1917    BEPA  35 0.495  51.51100
+804     12       1    A1 1918    BEPA  36 0.170  51.68100
+805     12       1    A1 1919    BEPA  37 0.060  51.74100
+806     12       1    A1 1920    BEPA  38 0.300  52.04100
+807     12       1    A1 1921    BEPA  39 0.190  52.23100
+808     12       1    A1 1922    BEPA  40 0.755  52.98600
+809     12       1    A1 1923    BEPA  41 0.260  53.24600
+810     12       1    A1 1924    BEPA  42 0.240  53.48600
+811     12       1    A1 1925    BEPA  43 0.525  54.01100
+812     12       1    A1 1926    BEPA  44 0.835  54.84600
+813     12       1    A1 1927    BEPA  45 0.880  55.72600
+814     12       1    A1 1928    BEPA  46 0.490  56.21600
+815     12       1    A1 1929    BEPA  47 0.465  56.68100
+816     12       1    A1 1930    BEPA  48 0.580  57.26100
+817     12       1    A1 1931    BEPA  49 0.530  57.79100
+818     12       1    A1 1932    BEPA  50 0.645  58.43600
+819     12       1    A1 1933    BEPA  51 0.600  59.03600
+820     12       1    A1 1934    BEPA  52 0.720  59.75600
+821     12       1    A1 1935    BEPA  53 1.230  60.98600
+822     12       1    A1 1936    BEPA  54 0.590  61.57600
+823     12       1    A1 1937    BEPA  55 0.330  61.90600
+824     12       1    A1 1938    BEPA  56 1.285  63.19100
+825     12       1    A1 1939    BEPA  57 1.310  64.50100
+826     12       1    A1 1940    BEPA  58 0.430  64.93100
+827     12       1    A1 1941    BEPA  59 0.920  65.85100
+828     12       1    A1 1942    BEPA  60 0.335  66.18600
+829     12       1    A1 1943    BEPA  61 0.620  66.80600
+830     12       1    A1 1944    BEPA  62 1.835  68.64100
+831     12       1    A1 1945    BEPA  63 1.705  70.34600
+832     12       1    A1 1946    BEPA  64 0.765  71.11100
+833     12       1    A1 1947    BEPA  65 0.505  71.61600
+834     12       1    A1 1948    BEPA  66 0.450  72.06600
+835     12       1    A1 1949    BEPA  67 1.300  73.36600
+836     12       1    A1 1950    BEPA  68 1.270  74.63600
+837     12       1    A1 1951    BEPA  69 0.980  75.61600
+838     12       1    A1 1952    BEPA  70 0.295  75.91100
+839     12       1    A1 1953    BEPA  71 0.715  76.62600
+840     12       1    A1 1954    BEPA  72 0.440  77.06600
+841     12       1    A1 1955    BEPA  73 0.615  77.68100
+842     12       1    A1 1956    BEPA  74 0.615  78.29600
+843     12       1    A1 1957    BEPA  75 1.310  79.60600
+844     12       1    A1 1958    BEPA  76 0.505  80.11100
+845     12       1    A1 1959    BEPA  77 0.785  80.89600
+846     12       1    A1 1960    BEPA  78 0.660  81.55600
+847     12       1    A1 1961    BEPA  79 0.335  81.89100
+848     12       1    A1 1962    BEPA  80 1.695  83.58600
+849     12       1    A1 1963    BEPA  81 1.380  84.96600
+850     12       1    A1 1964    BEPA  82 1.100  86.06600
+851     12       1    A1 1965    BEPA  83 1.475  87.54100
+852     12       1    A1 1966    BEPA  84 0.575  88.11600
+853     12       1    A1 1967    BEPA  85 0.585  88.70100
+854     12       1    A1 1968    BEPA  86 0.785  89.48600
+855     12       1    A1 1969    BEPA  87 1.285  90.77100
+856     12       1    A1 1970    BEPA  88 1.005  91.77600
+857     12       1    A1 1971    BEPA  89 0.770  92.54600
+858     12       1    A1 1972    BEPA  90 1.215  93.76100
+859     12       1    A1 1973    BEPA  91 1.240  95.00100
+860     12       1    A1 1974    BEPA  92 1.195  96.19600
+861     12       1    A1 1975    BEPA  93 1.405  97.60100
+862     12       1    A1 1976    BEPA  94 1.370  98.97100
+863     12       1    A1 1977    BEPA  95 1.360 100.33100
+864     12       1    A1 1978    BEPA  96 1.915 102.24600
+865     12       1    A1 1979    BEPA  97 1.385 103.63100
+866     12       1    A1 1980    BEPA  98 0.450 104.08100
+867     12       1    A1 1981    BEPA  99 0.435 104.51600
+868     12       1    A1 1982    BEPA 100 0.500 105.01600
+869     12       1    A1 1983    BEPA 101 0.390 105.40600
+870     12       1    A1 1984    BEPA 102 0.825 106.23100
+871     12       1    A1 1985    BEPA 103 1.225 107.45600
+872     12       1    A1 1986    BEPA 104 0.705 108.16100
+873     12       1    A1 1987    BEPA 105 0.395 108.55600
+874     12       1    A1 1988    BEPA 106 1.275 109.83100
+875     12       1    A1 1989    BEPA 107 1.155 110.98600
+876     12       1    A1 1990    BEPA 108 1.070 112.05600
+877     12       1    A1 1991    BEPA 109 1.420 113.47600
+878     12       1    A1 1992    BEPA 110 0.750 114.22600
+879     12       1    A1 1993    BEPA 111 1.925 116.15100
+880     12       1    A1 1994    BEPA 112 2.145 118.29600
+881     12       1    A1 1995    BEPA 113 1.100 119.39600
+882     12       1    A1 1996    BEPA 114 1.615 121.01100
+883     12       1    A1 1997    BEPA 115 0.760 121.77100
+884     12       1    A1 1998    BEPA 116 0.445 122.21600
+885     12       1    A1 1999    BEPA 117 1.090 123.30600
+886     12       1    A1 2000    BEPA 118 1.660 124.96600
+887     12       1    A1 2001    BEPA 119 1.105 126.07100
+888     12       1    A1 2002    BEPA 120 1.215 127.28600
+889     12       1    A1 2003    BEPA 121 1.020 128.30600
+890     12       1    A1 2004    BEPA 122 0.910 129.21600
+891     12       1    A1 2005    BEPA 123 1.060 130.27600
+892     12       1    A1 2006    BEPA 124 0.530 130.80600
+893     12       1    A1 2007    BEPA 125 0.830 131.63600
+894     13       1    A1 1946    ABBA   1 0.720  13.77720
+895     13       1    A1 1947    ABBA   2 0.760  14.53720
+896     13       1    A1 1948    ABBA   3 0.655  15.19220
+897     13       1    A1 1949    ABBA   4 1.260  16.45220
+898     13       1    A1 1950    ABBA   5 1.440  17.89220
+899     13       1    A1 1951    ABBA   6 1.375  19.26720
+900     13       1    A1 1952    ABBA   7 1.885  21.15220
+901     13       1    A1 1953    ABBA   8 1.935  23.08720
+902     13       1    A1 1954    ABBA   9 1.410  24.49720
+903     13       1    A1 1955    ABBA  10 1.645  26.14220
+904     13       1    A1 1956    ABBA  11 1.230  27.37220
+905     13       1    A1 1957    ABBA  12 1.635  29.00720
+906     13       1    A1 1958    ABBA  13 1.245  30.25220
+907     13       1    A1 1959    ABBA  14 0.845  31.09720
+908     13       1    A1 1960    ABBA  15 0.560  31.65720
+909     13       1    A1 1961    ABBA  16 0.500  32.15720
+910     13       1    A1 1962    ABBA  17 0.750  32.90720
+911     13       1    A1 1963    ABBA  18 1.240  34.14720
+912     13       1    A1 1964    ABBA  19 1.395  35.54220
+913     13       1    A1 1965    ABBA  20 1.680  37.22220
+914     13       1    A1 1966    ABBA  21 1.270  38.49220
+915     13       1    A1 1967    ABBA  22 1.255  39.74720
+916     13       1    A1 1968    ABBA  23 1.395  41.14220
+917     13       1    A1 1969    ABBA  24 1.425  42.56720
+918     13       1    A1 1970    ABBA  25 1.590  44.15720
+919     13       1    A1 1971    ABBA  26 0.970  45.12720
+920     13       1    A1 1972    ABBA  27 0.935  46.06220
+921     13       1    A1 1973    ABBA  28 0.910  46.97220
+922     13       1    A1 1974    ABBA  29 0.880  47.85220
+923     13       1    A1 1975    ABBA  30 1.300  49.15220
+924     13       1    A1 1976    ABBA  31 1.025  50.17720
+925     13       1    A1 1977    ABBA  32 1.065  51.24220
+926     13       1    A1 1978    ABBA  33 1.510  52.75220
+927     13       1    A1 1979    ABBA  34 1.340  54.09220
+928     13       1    A1 1980    ABBA  35 0.760  54.85220
+929     13       1    A1 1981    ABBA  36 1.105  55.95720
+930     13       1    A1 1982    ABBA  37 1.250  57.20720
+931     13       1    A1 1983    ABBA  38 1.505  58.71220
+932     13       1    A1 1984    ABBA  39 1.430  60.14220
+933     13       1    A1 1985    ABBA  40 1.050  61.19220
+934     13       1    A1 1986    ABBA  41 1.010  62.20220
+935     13       1    A1 1987    ABBA  42 0.615  62.81720
+936     13       1    A1 1988    ABBA  43 0.525  63.34220
+937     13       1    A1 1989    ABBA  44 0.595  63.93720
+938     13       1    A1 1990    ABBA  45 0.790  64.72720
+939     13       1    A1 1991    ABBA  46 0.830  65.55720
+940     13       1    A1 1992    ABBA  47 0.500  66.05720
+941     13       1    A1 1993    ABBA  48 0.610  66.66720
+942     13       1    A1 1994    ABBA  49 0.480  67.14720
+943     13       1    A1 1995    ABBA  50 0.180  67.32720
+944     13       1    A1 1996    ABBA  51 0.110  67.43720
+945     13       1    A1 1997    ABBA  52 0.085  67.52220
+946     13       1    A1 1998    ABBA  53 0.150  67.67220
+947     13       1    A1 1999    ABBA  54 0.170  67.84220
+948     13       1    A1 2000    ABBA  55 0.235  68.07720
+949     13       1    A1 2001    ABBA  56 0.320  68.39720
+950     13       1    A1 2002    ABBA  57 0.520  68.91720
+951     13       1    A1 2003    ABBA  58 0.345  69.26220
+952     13       1    A1 2004    ABBA  59 0.495  69.75720
+953     13       1    A1 2005    ABBA  60 0.715  70.47220
+954     13       1    A1 2006    ABBA  61 0.670  71.14220
+955     13       1    A1 2007    ABBA  62 0.575  71.71720
+956     14       1    A1 1984    PIGL   1 1.670  10.56500
+957     14       1    A1 1985    PIGL   2 1.450  12.01500
+958     14       1    A1 1986    PIGL   3 1.155  13.17000
+959     14       1    A1 1987    PIGL   4 0.845  14.01500
+960     14       1    A1 1988    PIGL   5 1.130  15.14500
+961     14       1    A1 1989    PIGL   6 0.915  16.06000
+962     14       1    A1 1990    PIGL   7 0.930  16.99000
+963     14       1    A1 1991    PIGL   8 0.755  17.74500
+964     14       1    A1 1992    PIGL   9 0.950  18.69500
+965     14       1    A1 1993    PIGL  10 0.990  19.68500
+966     14       1    A1 1994    PIGL  11 0.670  20.35500
+967     14       1    A1 1995    PIGL  12 0.300  20.65500
+968     14       1    A1 1996    PIGL  13 0.260  20.91500
+969     14       1    A1 1997    PIGL  14 0.880  21.79500
+970     14       1    A1 1998    PIGL  15 0.825  22.62000
+971     14       1    A1 1999    PIGL  16 1.615  24.23500
+972     14       1    A1 2000    PIGL  17 2.280  26.51500
+973     14       1    A1 2001    PIGL  18 2.065  28.58000
+974     14       1    A1 2002    PIGL  19 1.970  30.55000
+975     14       1    A1 2003    PIGL  20 1.875  32.42500
+976     14       1    A1 2004    PIGL  21 2.895  35.32000
+977     14       1    A1 2005    PIGL  22 2.785  38.10500
+978     14       1    A1 2006    PIGL  23 2.275  40.38000
+979     14       1    A1 2007    PIGL  24 2.010  42.39000</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Question 3</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>filtered_tree_dat <span class="ot">&lt;-</span> tree_dat <span class="sc">%&gt;%</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"ABBA"</span>, <span class="st">"PIST"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(species)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="do">##ANSWER: There have been 13033 records of Abies balsamea and 4188 records of Pinus strobus. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Question 4</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>last_year <span class="ot">&lt;-</span> <span class="fu">max</span>(tree_dat<span class="sc">$</span>year, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="co">#Finding the last year in the data set; $ notates choosing the column "year" within the data; other statement is getting rid of values that don't exist</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>tree_dat <span class="sc">%&gt;%</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> last_year, age <span class="sc">&gt;</span> <span class="dv">200</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>() <span class="co">#counting trees older than 200 years in the last year</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  n
+1 7</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="do">##ANSWER: There are 7 trees older than 200 years old in the last year of the dataset. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Question 5</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>tree_dat <span class="sc">%&gt;%</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  treeID standID stand year species age  inc rad_ib
+1     24       2    A2 2007    PIRE 269 0.37 308.84</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="do">##ANSWER: The oldest tree in the data set is #269. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Question 6</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>tree_dat <span class="sc">%&gt;%</span> </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2001</span>) <span class="sc">%&gt;%</span> <span class="co">#Filter only for 2001</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(<span class="at">order_by =</span> age, <span class="at">n =</span> <span class="dv">5</span>) <span class="co">#select top by oldest tree</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  treeID standID stand year species age   inc  rad_ib
+1     24       2    A2 2001    PIRE 263 0.210 306.880
+2     25       2    A2 2001    PIRE 259 0.280 156.210
+3   1595      24    F1 2001    FRNI 212 0.579 156.267
+4   1598      24    F1 2001    FRNI 206 0.394 130.251
+5   1712      26    F3 2001    FRNI 206 0.168 154.354</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="do">##ANSWER: The five oldest trees are 24, 25, 1595, 1598, and 1712. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Question 7</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ forcats   1.0.0     ✔ readr     2.1.5
+✔ ggplot2   3.5.1     ✔ stringr   1.5.1
+✔ lubridate 1.9.4     ✔ tibble    3.2.1
+✔ purrr     1.0.2     ✔ tidyr     1.3.1
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>tree_dat <span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">prop =</span> <span class="fl">0.3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2002</span>) <span class="sc">%&gt;%</span>   </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">sample_size =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  sample_size
+1         705</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ANSWER: There are 731 trees recorded in a 30% sample of those recorded in 2002. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Question 8</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>filtered_tree_dat <span class="ot">&lt;-</span> tree_dat <span class="sc">%&gt;%</span> </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(standID <span class="sc">==</span> <span class="dv">5</span>, year <span class="sc">==</span> <span class="dv">2007</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(rad_ib)) <span class="sc">%&gt;%</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">3</span>)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="co">#ANSWER: The top three trees are 128, 157, and 135.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Question 9</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>filtered_tree_dat <span class="ot">&lt;-</span> tree_dat <span class="sc">%&gt;%</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(treeID, standID, year, rad_ib) <span class="sc">%&gt;%</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(standID <span class="sc">==</span> <span class="dv">3</span> <span class="sc">&amp;</span> year <span class="sc">==</span> <span class="dv">2007</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_min</span>(<span class="at">order_by =</span> rad_ib, <span class="at">n =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 3
+Columns: 4
+$ treeID  &lt;int&gt; 50, 56, 36
+$ standID &lt;int&gt; 3, 3, 3
+$ year    &lt;int&gt; 2007, 2007, 2007
+$ rad_ib  &lt;dbl&gt; 47.396, 48.440, 54.925</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ANSWER: The smallest three trees are 50, 56, and 36.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Question 10</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>filtered_tree_dat <span class="sc">%&gt;%</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>standID) <span class="sc">%&gt;%</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 3
+Columns: 3
+$ treeID &lt;int&gt; 50, 56, 36
+$ year   &lt;int&gt; 2007, 2007, 2007
+$ rad_ib &lt;dbl&gt; 47.396, 48.440, 54.925</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ANSWER: The removal of the stand column can be found in the output table. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Question 11 </span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>?dplyr<span class="sc">::</span>select</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>starting httpd help server ... done</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>filtered_tree_dat <span class="sc">%&gt;%</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">"ID"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 3
+Columns: 2
+$ treeID  &lt;int&gt; 50, 56, 36
+$ standID &lt;int&gt; 3, 3, 3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ANSWER: The selection pattern can be found in the output table. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Question 12</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>filtered_tree_dat <span class="sc">%&gt;%</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">"ID"</span>),<span class="fu">contains</span>(<span class="st">"stand"</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 3
+Columns: 2
+$ treeID  &lt;int&gt; 50, 56, 36
+$ standID &lt;int&gt; 3, 3, 3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ANSWER: The selection pattern can be found in the output table. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Question 13</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>tree_dat <span class="ot">&lt;-</span> tree_dat <span class="sc">%&gt;%</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">rad_ib_mm =</span> rad_ib) <span class="sc">%&gt;%</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 131,386
+Columns: 8
+$ treeID    &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+$ standID   &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+$ stand     &lt;chr&gt; "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", …
+$ year      &lt;int&gt; 1960, 1961, 1962, 1963, 1964, 1965, 1966, 1967, 1968, 1969, …
+$ species   &lt;chr&gt; "ABBA", "ABBA", "ABBA", "ABBA", "ABBA", "ABBA", "ABBA", "ABB…
+$ age       &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 1…
+$ inc       &lt;dbl&gt; 0.930, 0.950, 0.985, 0.985, 0.715, 0.840, 0.685, 0.940, 1.16…
+$ rad_ib_mm &lt;dbl&gt; 10.78145, 11.73145, 12.71645, 13.70145, 14.41645, 15.25645, …</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ANSWER: The renaming can be found in the output data table. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Question 14</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>filtered_tree_dat <span class="ot">&lt;-</span> tree_dat <span class="sc">%&gt;%</span> </span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rad_ib_cm =</span> rad_ib_mm<span class="sc">/</span><span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">basal_area_m2 =</span> <span class="fl">0.00007854</span><span class="sc">*</span>rad_ib_cm<span class="sc">^</span><span class="dv">2</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2007</span>, species <span class="sc">==</span> <span class="st">"POTR"</span>)</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>mean_basal_area <span class="ot">&lt;-</span> <span class="fu">mean</span>(filtered_tree_dat<span class="sc">$</span>basal_area_m2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(mean_basal_area)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.009241546</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ANSWER: The mean basal area of POTR in 2007 is 0.009241546.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Question 15</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>filtered_tree_dat <span class="ot">&lt;-</span> tree_dat <span class="sc">%&gt;%</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">established =</span> <span class="fu">if_else</span>(age <span class="sc">&gt;</span> <span class="dv">5</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="at">missing =</span> <span class="cn">NULL</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(established)</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="co">#ANSWER: There are 122,503 established trees.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Question 16</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>filtered_tree_dat <span class="ot">&lt;-</span> tree_dat <span class="sc">%&gt;%</span> </span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rad_ib_cm =</span> rad_ib_mm <span class="sc">/</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DBH_class =</span> <span class="fu">case_when</span>(</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>    rad_ib_cm <span class="sc">&lt;</span><span class="fl">2.5</span><span class="sc">~</span><span class="st">"seedling"</span>, </span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>    rad_ib_cm <span class="sc">&lt;=</span><span class="dv">10</span><span class="sc">~</span><span class="st">"sapling"</span>,</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>    rad_ib_cm<span class="sc">&lt;=</span><span class="dv">30</span><span class="sc">~</span><span class="st">"pole"</span>,</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>    rad_ib_cm<span class="sc">&gt;</span><span class="dv">30</span><span class="sc">~</span><span class="st">"sawlog"</span>,</span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span><span class="sc">~</span><span class="st">"NA_character"</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(DBH_class)</span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a><span class="co">#ANSWER: Class "pole" has 473 trees, "sapling" has 1817, and "sawlog" has 1 tree.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Question 17</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>filtered_tree_dat <span class="ot">&lt;-</span> tree_dat <span class="sc">%&gt;%</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rad_ib_cm =</span> rad_ib_mm <span class="sc">/</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2007</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_rad =</span> <span class="fu">mean</span>(rad_ib_cm),</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_rad =</span> <span class="fu">sd</span>(rad_ib_cm))</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a><span class="co">#ANSWER: The mean is 8.046755 which means the average size of the inside bark radius at breast height is 8.046755. The standard deviation is 3.069321 which means the average variation of each value from the mean is 3.069321.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Question 18</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>filtered_tree_dat <span class="ot">&lt;-</span> tree_dat <span class="sc">%&gt;%</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2003</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species)<span class="sc">%&gt;%</span></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_tree_age =</span> <span class="fu">mean</span>(age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span> (mean_tree_age, <span class="at">n =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 3
+Columns: 2
+$ species       &lt;chr&gt; "THOC", "FRNI", "PIST"
+$ mean_tree_age &lt;dbl&gt; 126.63830, 83.08333, 73.28571</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ANSWER: The three species with the oldest mean age are THOC, FRNI, and PIST. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Question 19</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>filtered_tree_dat <span class="ot">&lt;-</span> tree_dat <span class="sc">%&gt;%</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">num_unique_years =</span> <span class="fu">n_distinct</span>(year),</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">first_year =</span> <span class="fu">min</span>(year), </span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">last_year =</span> <span class="fu">max</span>(year))</span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a><span class="co">#ANSWER: There are 111 unique years with records in the data set. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Question 20</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>filtered_tree_dat <span class="ot">&lt;-</span> tree_dat <span class="sc">%&gt;%</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(stand) <span class="sc">%&gt;%</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">num_unique_years =</span> <span class="fu">n_distinct</span>(year)) <span class="sc">%&gt;%</span></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>num_unique_years) <span class="sc">%&gt;%</span></span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 35
+Columns: 2
+$ stand            &lt;chr&gt; "A1", "D1", "D2", "D3", "F1", "A5", "G1", "A2", "D5",…
+$ num_unique_years &lt;int&gt; 111, 111, 111, 111, 111, 110, 109, 105, 105, 94, 90, …</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ANSWER: The stands with the largest temporal record are A1, D1, D2, D3, and F1. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Final Question</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>filtered_tree_dat <span class="ot">&lt;-</span> tree_dat <span class="sc">%&gt;%</span></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rad_ib_cm =</span> rad_ib_mm <span class="sc">/</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">growth =</span> rad_ib_cm <span class="sc">-</span> <span class="fu">lag</span>(rad_ib_cm)) <span class="sc">%&gt;%</span></span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">total_years =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(total_years <span class="sc">&gt;</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(growth)) <span class="sc">%&gt;%</span></span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span></span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_growth =</span> <span class="fu">mean</span>(growth))</span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a><span class="co">#ANSWER: The three species with the fastest growth are PIRE, PIST, and POTR. The three species with the slowest growth are QURU, ACSA, and ACRU. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>#Image and caption of tree: <img src="img/Red-Pine1.jpg" class="img-fluid" alt="The fastest growing species is PIRE (Pinus resinosa). The following is an image of this species."></p>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
